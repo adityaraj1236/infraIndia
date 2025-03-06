@@ -1,8 +1,10 @@
 const App = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen text-white text-3xl text-center font-bold bg-gray-900 w-full">
-      <h1>InfraIndia</h1>
-      <p>COMING SOON!</p>
+    <div className="bg-gray-900 flex w-full h-screen justify-center items-center">
+      <h1 className="text-3xl font-bold underline">
+        InfraIndia <span>COMING SOON!</span>
+      </h1>
+
     </div>
   )
 }
