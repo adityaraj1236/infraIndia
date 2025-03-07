@@ -2,6 +2,7 @@ import { Burger, Drawer, UnstyledButton } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 // Tree data
 const data = [
@@ -9,8 +10,15 @@ const data = [
     value: "Platform",
     label: "Platform",
     children: [
-      { value: "Platform/components", label: "Components" },
-      { value: "src/hooks", label: "Hooks" },
+      { value: "Platform/ProjectTracking", label: "ProjectTracking" },
+      {
+        value: "Platform/DocumentManagement",
+        label: "Document Management & Collaboration",
+      },
+      {
+        value: "Platform/ResourceManagement",
+        label: "Resource & Equipment Management",
+      },
     ],
   },
   {
@@ -50,7 +58,11 @@ const Navbar = () => {
           >
             <span className="text-sm font-medium">{node.label}</span>
             {node.children ? (
-              openNodes[node.value] ? <ChevronUp size={16} /> : <ChevronDown size={16} />
+              openNodes[node.value] ? (
+                <ChevronUp size={16} />
+              ) : (
+                <ChevronDown size={16} />
+              )
             ) : null}
           </div>
 
@@ -95,9 +107,15 @@ const Navbar = () => {
           {/* Tree menu */}
           {renderTree(data)}
           <div className="pt-2 mt-2 border-t border-gray-300 text-sm">
-            <div className="py-2">Enterprise</div>
-            <div className="py-2">Pricing</div>
-            <div className="py-2">Careers</div>
+            <div className="py-2">
+                <Link to={"/login"}>Enterprise</Link>
+            </div>
+            <div className="py-2">
+                <Link to={"/pricing"} >Pricing</Link>
+            </div>
+            <div className="py-2">
+                <Link to={"/careers"}>Careers</Link>
+            </div>
           </div>
         </div>
       </Drawer>
