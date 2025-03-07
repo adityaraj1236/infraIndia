@@ -77,9 +77,9 @@ const Navbar = () => {
 
       {/* Mobile menu button (fixed) */}
       <div className="md:hidden">
-        <UnstyledButton onClick={open} className="p-2 rounded-md border">
+        <div onClick={open} className="p-2 rounded-md border-none">
           <Burger opened={opened} />
-        </UnstyledButton>
+        </div>
       </div>
 
       {/* Drawer for mobile menu */}
