@@ -57,7 +57,7 @@ export function FooterLinks() {
     <footer className="bg-gray-100 py-8">
       <div className="container mx-auto px-4">
         <div className="flex flex-wrap justify-between items-start mb-6">
-          <div className="w-1/4">
+          <div className="w-full py-2 flex flex-col justify-center items-center text-center">
             <div className="font-bold text-lg mb-2">InfraIndia</div>
             <p className="text-sm text-gray-600">
               Building the future with innovative and sustainable infrastructure solutions.
