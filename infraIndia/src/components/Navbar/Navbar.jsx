@@ -87,9 +87,12 @@ const Navbar = () => {
         <button className="px-4 py-2 bg-gray-200 rounded">Get started</button>
       </div>
 
-      <div>
+      <div className="flex">
         <button className="px-4 py-2 bg-gray-200 rounded">
             <Link to={"/login"}>Login</Link>
+        </button>
+        <button className="px-4 py-2 bg-gray-200 rounded">
+          <Link to={"/projects"}>Projects</Link>
         </button>
       </div>
 
