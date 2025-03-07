@@ -87,6 +87,12 @@ const Navbar = () => {
         <button className="px-4 py-2 bg-gray-200 rounded">Get started</button>
       </div>
 
+      <div>
+        <button className="px-4 py-2 bg-gray-200 rounded">
+            <Link to={"/login"}>Login</Link>
+        </button>
+      </div>
+
       {/* Mobile menu button (fixed) */}
       <div className="md:hidden">
         <div onClick={open} className="p-2 rounded-md border-none">
