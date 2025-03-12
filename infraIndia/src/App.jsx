@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./components/HomePage";
 import LoginPage from "./components/auth/LoginPage";
@@ -11,8 +12,13 @@ import FinanceOverview from "./components/director/FinanceOverview";
 import Projects from "./components/director/Projects";
 import ProjectDetails from "./components/projects/ProjectDetails"; // Import the new component
 import CreateProjectForm from "./components/projects/CreateProjectForm";
+import { useProject } from "./contextapi/ProjectContext";
+// import ProjectDashboard from "./components/projects/ProjectDashboard";
 
 const App = () => {
+  const [projectViews, setProjectViews] = useState(["overview", "list"]); // Default required views
+  const {projectName} =  useProject()
+
   return (
     <Router>
       <Routes>
@@ -27,7 +33,8 @@ const App = () => {
         <Route path="/admin-dashboard" element={<FinanceOverview />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/projects/new/blank" element={<CreateProjectForm/>}/>
-        <Route path="/projects/:projectName" element={<ProjectDetails />} /> {/* Dynamic route */}
+        <Route path="/project/:projectName" element={<ProjectDetails />} /> {/* Dynamic route */}
+        {/* <Route path="/project/:tab" element={<ProjectDashboard selectedViews={projectViews} />} /> */}
       </Routes>
     </Router>
   );
