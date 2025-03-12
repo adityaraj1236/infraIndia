@@ -9,22 +9,25 @@ import ResetPassword from "./components/auth/ResetPassword";
 import Dashboard from "./components/director/Dashboard";
 import FinanceOverview from "./components/director/FinanceOverview";
 import Projects from "./components/director/Projects";
+import ProjectDetails from "./components/projects/ProjectDetails"; // Import the new component
+import CreateProjectForm from "./components/projects/CreateProjectForm";
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        {/* Direct (top-level) routes */}
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage/>} />
-        <Route path="/pricing" element={<PricePage/>}/>
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/pricing" element={<PricePage />} />
         <Route path="/forgot-password" element={<ForgotPasswordEmailPage />} />
-        <Route path ="/verify-otp" element={<VerifyOtpPage />} />
-        <Route path= "/reset-password" element={<ResetPassword />} />
-        <Route path="/dashboard" element={<Dashboard/>}/>
-        <Route path="/admin-dashboard" element={<FinanceOverview/>}/>
-        <Route path="/projects" element={<Projects/>}/>
+        <Route path="/verify-otp" element={<VerifyOtpPage />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/admin-dashboard" element={<FinanceOverview />} />
+        <Route path="/projects" element={<Projects />} />
+        <Route path="/projects/new/blank" element={<CreateProjectForm/>}/>
+        <Route path="/projects/:projectName" element={<ProjectDetails />} /> {/* Dynamic route */}
       </Routes>
     </Router>
   );
