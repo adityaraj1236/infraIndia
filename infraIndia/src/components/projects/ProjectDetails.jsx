@@ -5,13 +5,27 @@ import {
   SemiCircleProgress,
   useMantineTheme,
 } from "@mantine/core";
-import { BellDot, Clipboard, Home, Mail, PlusCircle } from "lucide-react";
+import {
+  BellDot,
+  ChartColumnBigIcon,
+  Clipboard,
+  Home,
+  Mail,
+  Plus,
+  PlusCircle,
+  ChevronDown,
+  ChevronUp,
+  Folder,
+  MapPin,
+} from "lucide-react";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "../../index.css";
 
 const ProjectDetails = () => {
   const [opened, setOpened] = useState(false);
+  const [insightsOpen, setInsightsOpen] = useState(false); // State to toggle Reporting
+  const [projectOpen, setProjectOpen] = useState(false); // State to toggle Reporting
   const location = useLocation();
   const formData = location.state?.formData || {};
   const theme = useMantineTheme();
@@ -38,7 +52,6 @@ const ProjectDetails = () => {
       <Drawer
         opened={opened}
         onClose={() => setOpened(false)}
-        title="Welcome Drawer"
         styles={{
           content: { backgroundColor: theme.colors.dark[9], color: "white" },
           header: { backgroundColor: theme.colors.dark[9], color: "white" },
@@ -67,8 +80,7 @@ const ProjectDetails = () => {
         <Divider color="#374151" className="my-3" />
 
         {/* Scrollable Project Section */}
-        <div>
-          <h2 className="text-lg font-bold mb-2">Projects</h2>
+        <div className="flex flex-col">
           <ScrollAreaAutosize
             style={{
               maxHeight: "250px",
@@ -77,15 +89,57 @@ const ProjectDetails = () => {
             type="always"
             className="hide-scrollbar"
           >
-            <div className="space-y-2 p-2">
-              {Array.from({ length: 20 }).map((_, index) => (
-                <div
-                  key={index}
-                  className="p-2 bg-gray-800 text-white rounded-md cursor-pointer hover:bg-gray-700"
-                >
-                  Project {index + 1}
+            {/* Insights Section with Tree Structure */}
+            <div className="flex flex-col">
+              {/* Insights - Clickable with Arrow */}
+              <div
+                className="flex justify-between items-center p-3 rounded-lg hover:bg-gray-900 cursor-pointer"
+                onClick={() => setInsightsOpen(!insightsOpen)}
+              >
+                <span className="flex items-center gap-2">
+                   Insights
+                </span>
+                {insightsOpen ? <ChevronUp /> : <ChevronDown />}
+              </div>
+
+              {/* Reporting - Shown when Insights is open */}
+              {insightsOpen && (
+                <>
+                <div className="pl-6 flex items-center gap-2 p-2 rounded-lg hover:bg-gray-800 cursor-pointer">
+                  <ChartColumnBigIcon /> Reporting
                 </div>
-              ))}
+                <div className="pl-6 flex items-center gap-2 p-2 rounded-lg hover:bg-gray-800 cursor-pointer">
+                  <Folder/> Portfolios
+                </div>
+                <div className="pl-6 flex items-center gap-2 p-2 rounded-lg hover:bg-gray-800 cursor-pointer">
+                  <MapPin/> Goals
+                </div>
+                </>
+              )}
+            </div>
+
+            {/* Project section with Tree Structure */}
+            <div className="flex flex-col">
+              {/* Projects - Clickable with Arrow */}
+              <div
+                className="flex justify-between items-center p-3 rounded-lg hover:bg-gray-900 cursor-pointer"
+                onClick={() => setProjectOpen(!projectOpen)}
+              >
+                <span className="flex items-center gap-2">
+                   Projects
+                </span>
+                {projectOpen ? <ChevronUp /> : <ChevronDown />}
+              </div>
+
+              {/* Reporting - Shown when Insights is open */}
+              {projectOpen && (
+                <>
+                <div className="pl-6 flex items-center gap-2 p-2 rounded-lg hover:bg-gray-800 cursor-pointer">
+                  {formData.projectName}
+                </div>
+              
+                </>
+              )}
             </div>
           </ScrollAreaAutosize>
         </div>
@@ -105,7 +159,7 @@ const ProjectDetails = () => {
               value={50}
               label="50%"
             />
-            <span className="text-md text-gray-300">Usage Limit Reached: 50%</span>
+            <span className="text-md text-gray-300">Free Tier Limit Reached: 50%</span>
           </div>
           <button className="bg-yellow-300 hover:bg-yellow-100 py-2 px-4 rounded-md text-blue-800 font-semibold w-full">
             Add Billing Info
