@@ -12,12 +12,13 @@ import FinanceOverview from "./components/director/FinanceOverview";
 import Projects from "./components/director/Projects";
 import ProjectDetails from "./components/projects/ProjectDetails"; // Import the new component
 import CreateProjectForm from "./components/projects/CreateProjectForm";
+import ProjectHomeRedirect from "./components/projects/ProjectHomeRedirect";
 import { useProject } from "./contextapi/ProjectContext";
 // import ProjectDashboard from "./components/projects/ProjectDashboard";
 
 const App = () => {
   const [projectViews, setProjectViews] = useState(["overview", "list"]); // Default required views
-  const {projectName} =  useProject()
+  const {projectName , formData} =  useProject()
 
   return (
     <Router>
@@ -34,6 +35,8 @@ const App = () => {
         <Route path="/projects" element={<Projects />} />
         <Route path="/projects/new/blank" element={<CreateProjectForm/>}/>
         <Route path="/project/:projectName" element={<ProjectDetails />} /> {/* Dynamic route */}
+        <Route path={`/${formData.projectName}/home`} element={<ProjectHomeRedirect/>} /> {/* Dynamic route */}
+
         {/* <Route path="/project/:tab" element={<ProjectDashboard selectedViews={projectViews} />} /> */}
       </Routes>
     </Router>

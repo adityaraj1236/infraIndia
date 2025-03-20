@@ -4,6 +4,12 @@ import {
   ScrollAreaAutosize,
   SemiCircleProgress,
   useMantineTheme,
+  HoverCard,
+  Button,
+  Text,
+  Group,
+  Avatar,
+  Tabs
 } from "@mantine/core";
 import {
   BellDot,
@@ -17,17 +23,24 @@ import {
   ChevronUp,
   Folder,
   MapPin,
+  Users,
+  UserPlus,
+  FileText,
+  Star
 } from "lucide-react";
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation  , Link} from "react-router-dom";
 import "../../index.css";
+import { useProject } from "../../contextapi/ProjectContext";
+
 
 const ProjectDetails = () => {
+  const {formData , setFormData} = useProject();
   const [opened, setOpened] = useState(false);
   const [insightsOpen, setInsightsOpen] = useState(false); // State to toggle Reporting
   const [projectOpen, setProjectOpen] = useState(false); // State to toggle Reporting
   const location = useLocation();
-  const formData = location.state?.formData || {};
+  // const formData = location.state?.formData || {};
   const theme = useMantineTheme();
 
   useEffect(() => {
@@ -35,20 +48,8 @@ const ProjectDetails = () => {
   }, []);
 
   return (
+    <div className="flex">
     <div>
-      <h1 className="text-xl font-semibold text-white">
-        Project Created Successfully!
-      </h1>
-      <p>
-        <strong>Name:</strong> {formData.projectName}
-      </p>
-      <p>
-        <strong>Privacy:</strong> {formData.privacy}
-      </p>
-      <p>
-        <strong>Views:</strong> {formData.views?.join(", ")}
-      </p>
-
       <Drawer
         opened={opened}
         onClose={() => setOpened(false)}
@@ -56,6 +57,11 @@ const ProjectDetails = () => {
           content: { backgroundColor: theme.colors.dark[9], color: "white" },
           header: { backgroundColor: theme.colors.dark[9], color: "white" },
         }}
+        size="20%"
+  withOverlay={false}  // Removes the background overlay
+  withinPortal={false} // Allows interaction with the background
+  trapFocus={false} // Enables clicking background elements
+  closeOnClickOutside={false} // Prevents auto-close when clicking outside
       >
         {/* Create Section */}
         <div>
@@ -66,9 +72,12 @@ const ProjectDetails = () => {
             </div>
           </div>
 
+
+          <Link to={`/${formData.projectName}/home`}>
           <div className="flex gap-2 p-4 mt-4 rounded-lg hover:bg-gray-900 cursor-pointer">
             <Home /> Home
           </div>
+          </Link>
           <div className="flex gap-2 p-4 mt-2 rounded-lg hover:bg-gray-900 cursor-pointer">
             <Clipboard /> My tasks
           </div>
@@ -140,6 +149,52 @@ const ProjectDetails = () => {
               
                 </>
               )}
+
+
+              {/* Team Section  with Tree structure */}
+              <div className="flex flex-col relative">
+              <div>
+                Team
+              </div>
+              <div className="flex gap-2 mt-4 mb-4">
+              <Users/>
+              <Group justify="center">
+            <HoverCard width={320}  height={720} shadow="md">
+          <HoverCard.Target>
+          <div>My workspace</div>
+          </HoverCard.Target>
+          <div className="absolute left-[20%]">
+          <HoverCard.Dropdown>
+          <div>
+            <div>My workspace</div>
+            <div className="flex flex-col">
+              <div className="flex gap-1 justify-between mt-3">
+                <div className="flex gap-2 cursor-pointer">
+                  <UserPlus/>
+                  Invite teammates
+                </div>
+                <Avatar
+                  src="https://images.pexels.com/photos/14364849/pexels-photo-14364849.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" // Replace with your image URL
+      alt="Profile"
+      radius="xl" // Makes it circular
+      size="sm" // Size: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+                />
+              </div>
+              <div className="flex gap-2 mt-3 mb-3">
+              <FileText/>
+                <p>Create Project</p>
+              </div>
+            </div>
+            <Divider/>
+            <div>{formData.projectName}</div>
+          </div>
+        </HoverCard.Dropdown>
+        </div>
+          </HoverCard>
+    </Group>
+              </div>
+
+              </div>
             </div>
           </ScrollAreaAutosize>
         </div>
@@ -173,6 +228,54 @@ const ProjectDetails = () => {
           <Mail /> Invite teammates
         </div>
       </Drawer>
+    </div>
+    <div className="flex ml-[30%] mt-4 justify-between w-[70%]  mr-4">
+  {/* Left Section: My Workspace & Star */}
+  <div className="flex items-center gap-3">
+    <Avatar />
+    <span className="text-2xl font-bold">My workspace</span>
+    <Star size={20} />
+  </div>
+
+  {/* Right Section: Overview, Avatar & Invite Button */}
+  <div className="flex flex-col">
+  <div className="flex items-center gap-4">
+    <div className="flex items-center gap-2">
+      <Avatar />
+      <Button>Invite</Button>
+    </div>
+  </div>
+  {/* Tabs Section */}
+ 
+ {
+  formData.views.length> 0  &&  (
+    <Tabs deafultValue={formData.views[0]?.value?? formData.views[0]}>
+    <Tabs.List>
+      {formData.views.map((view , index)=>(
+        <Tabs.Tab 
+          key={index} 
+          value={typeof view === "string" ? view : view.value}
+        >
+          {typeof view === "string" ? view.charAt(0).toUpperCase() + view.slice(1) : view.label}
+        </Tabs.Tab>
+      ))}
+    </Tabs.List>
+    {formData.views.map((view, index) => (
+    <Tabs.Panel 
+      key={index} 
+      value={typeof view === "string" ? view : view.value}
+    >
+      {/* Content for the tab */}
+      <p>{`Content for ${typeof view === "string" ? view : view.label}`}</p>
+    </Tabs.Panel>
+  ))}
+    </Tabs>
+
+  )
+ }
+</div>
+</div>
+
     </div>
   );
 };
