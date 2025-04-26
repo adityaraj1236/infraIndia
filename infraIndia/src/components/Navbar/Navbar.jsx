@@ -80,7 +80,7 @@ const Navbar = () => {
   return (
     <div className="flex justify-between items-center p-4 bg-white shadow-md w-full">
       {/* Logo */}
-      <div className="text-lg font-bold text-gray-800">InfraIndia</div>
+      <div className="text-lg font-bold text-gray-800">XpansHil<span className="text-blue-500">Global</span></div>
 
       {/* Desktop navigation (hidden on mobile) */}
       <div className="hidden md:flex gap-6 items-center">
